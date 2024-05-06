@@ -74,8 +74,8 @@ def convert_srt_folder_to_json(srt_folder_path, json_output_folder):
         # 设置SRT文件夹和JSON输出文件夹的路径
 
 
-srt_folder_path = 'subtitles'
-json_output_folder = 'subtitle_json'
+srt_folder_path = 'subtitles_Srt'
+json_output_folder = 'subtitle_JSON'
 
 # 转换SRT文件夹中的所有文件到JSON
 convert_srt_folder_to_json(srt_folder_path, json_output_folder)
