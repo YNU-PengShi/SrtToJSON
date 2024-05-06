@@ -71,11 +71,32 @@ def convert_srt_folder_to_json(srt_folder_path, json_output_folder):
             write_to_json(captions, json_file_path)
             print(f"Captions from {srt_file} have been written to {json_file_path}")
 
-        # 设置SRT文件夹和JSON输出文件夹的路径
+
+def merge_json_files_in_folder(folder_path, output_file_path):
+    merged_data = {}
+
+    # 遍历文件夹中的所有文件
+    for filename in os.listdir(folder_path):
+        print(filename)
+        if filename.endswith('.json'):  # 确保文件是JSON文件
+            file_path = os.path.join(folder_path, filename)
+            with open(file_path, 'r', encoding='utf-8') as f:
+                try:
+                    # 读取JSON文件内容
+                    data = json.load(f)
+                    # 将文件内容包装在其文件名作为键的字典中
+                    merged_data[filename[:-5]] = data  # 去除.json后缀作为键
+                except json.JSONDecodeError as e:
+                    print(f"Error decoding {filename}: {e}")
+
+                    # 将合并后的数据写入新的JSON文件
+    with open(output_file_path, 'w', encoding='utf-8') as f:
+        json.dump(merged_data, f, ensure_ascii=False, indent=4)  # 格式化输出
 
 
-srt_folder_path = 'subtitles_Srt'
-json_output_folder = 'subtitle_JSON'
-
-# 转换SRT文件夹中的所有文件到JSON
+srt_folder_path = 'subtitles'
+json_output_folder = 'subtitle_json'
 convert_srt_folder_to_json(srt_folder_path, json_output_folder)
+JSON_folder_path = 'subtitle_json'  # 替换为你的JSON文件所在的文件夹路径
+output_file_path = 'subtitle.json'  # 替换为你想要保存合并后JSON文件的路径
+merge_json_files_in_folder(JSON_folder_path, output_file_path)
